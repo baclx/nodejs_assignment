@@ -70,6 +70,56 @@ const createPost = (req, res) => {
     });
 }
 
+const updatePost = (req, res) => {
+  const id = req.params.id;
+
+  Post.update(req.body, {
+    where: { id: id }
+  })
+    .then(num => {
+      console.log(num);
+      if (num == 1) {
+        res.send({
+          message: "Post was updated successfully"
+        });
+      } else {
+        res.send({
+          message: `Cannot update Post with id = ${id}. Maybe Post was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Post with id=" + id
+      });
+    })
+}
+
+const deletePost = (req, res) => {
+  const id = req.params.id;
+
+  Post.destroy({
+    where: { id: id }
+  })
+    .then(num => {
+      console.log(num);
+      if (num == 1) {
+        res.send({
+          message: "Post was deleted successfully"
+        });
+      } else {
+        res.send({
+          message: `Cannot delete Post with id = ${id}. Maybe Post was not found`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error deleting Post with id = " + id
+      });
+    })
+}
+
 // commet
 const getAllComment = (req, res) => {
   Comment.findAll()
@@ -103,6 +153,56 @@ const createComment = (req, res, postId) => {
     });
 };
 
+const updateComment = (req, res) => {
+  const id = req.params.id;
+
+  Comment.update(req.body, {
+    where: { id: id }
+  })
+    .then(num => {
+      console.log(num);
+      if (num == 1) {
+        res.send({
+          message: "Comment was updated successfully"
+        });
+      } else {
+        res.send({
+          message: `Cannot update Comment with id = ${id}. Maybe Comment was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send({
+        message: "Error updating Comment with id = " + id
+      });
+    })
+}
+
+const deleteComment = (req, res) => {
+  const id = req.params.id;
+
+  Comment.destroy({
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Comment was deleted successfully"
+        });
+      } else {
+        res.send({
+          message: `Cannot delete Comment with id = ${id}. Maybe Comment was not found`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error deleting Comment with id = " + id
+      });
+    })
+}
+
 module.exports = {
   allAccess,
   userBoard,
@@ -110,6 +210,9 @@ module.exports = {
   moderatorBoard,
   getAllPost,
   createPost,
+  updatePost,
+  deletePost,
   getAllComment,
   createComment,
+  updateComment,
 }

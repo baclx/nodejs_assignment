@@ -41,6 +41,16 @@ module.exports = function (app) {
     controller.createPost
   )
 
+  app.put(
+    "/api/post/:id",
+    controller.updatePost
+  )
+
+  app.delete(
+    "/api/post/:id",
+    controller.deletePost
+  )
+
   // comment
   app.get(
     "/api/comment",
@@ -50,5 +60,10 @@ module.exports = function (app) {
   app.post(
     "/api/comment",
     controller.createComment
+  )
+
+  app.put(
+    "/api/comment/:id",
+    controller.updateComment
   )
 };
